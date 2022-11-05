@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SimplyForum.Data
+namespace SimplyForum.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
