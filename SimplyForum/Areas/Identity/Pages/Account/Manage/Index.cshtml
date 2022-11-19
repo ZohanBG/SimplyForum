@@ -12,8 +12,20 @@
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
+                <input asp-for="Username" class="form-control" disabled/>
                 <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                @{
+                    var base64 = Convert.ToBase64String(Model.ProfilePicture);
+                    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+                }
+                <img src="@imgSrc"/>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.NewProfilePicture" class="form-control" autocomplete="email" aria-required="true" />
+                <label asp-for="Input.NewProfilePicture"></label>
+                <span asp-validation-for="Input.NewProfilePicture" class="text-danger"></span>
             </div>
             <div class="form-floating">
                 <input asp-for="Input.PhoneNumber" class="form-control" />

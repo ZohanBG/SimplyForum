@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using SimplyForum.Core.Services;
+using SimplyForum.Core.Contracts;
 using SimplyForum.Infrastructure.Data;
 using SimplyForum.Infrastructure.Data.Models;
 
@@ -10,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
-    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 5;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireLowercase = false;
@@ -18,6 +20,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IImageResizer, ImageResizer>();
 
 var app = builder.Build();
 

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SimplyForum.Core.CustomValidationAttributes;
+using SimplyForum.Core.Services;
 using SimplyForum.Infrastructure.Data.Models;
 
 namespace SimplyForum.Areas.Identity.Pages.Account.Manage
@@ -26,6 +28,7 @@ namespace SimplyForum.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
+        public byte[] ProfilePicture { get; set; }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -52,10 +55,11 @@ namespace SimplyForum.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            [Required]
+            [AllowedExtensions(new string[] { ".jpg", ".png" })]
+            [Display(Name = "Profile picture")]
+            public IFormFile NewProfilePicture { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -67,6 +71,7 @@ namespace SimplyForum.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
+            ProfilePicture = user.ProfilePicture;
 
             Input = new InputModel
             {
@@ -110,6 +115,10 @@ namespace SimplyForum.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            var image = new ImageResizer();
+            user.ProfilePicture = image.ApplicationUserProfileImageResize(Input.NewProfilePicture);
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
