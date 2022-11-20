@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace SimplyForum.Infrastructure.Data.Models
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class Community
     {
         [Key]
@@ -11,6 +13,14 @@ namespace SimplyForum.Infrastructure.Data.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = null!;
+
+
+        [Required]
+        public byte[] BannerImage { get; set; } = null!;
+
+
+        [Required]
+        public byte[] CommunityImage { get; set; } = null!;
 
 
         [Required]

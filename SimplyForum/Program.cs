@@ -3,6 +3,7 @@ using SimplyForum.Core.Services;
 using SimplyForum.Core.Contracts;
 using SimplyForum.Infrastructure.Data;
 using SimplyForum.Infrastructure.Data.Models;
+using SimplyForum.Infrastructure.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IImageResizer, ImageResizer>();
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICommunityService, CommunityService>();
 
 var app = builder.Build();
 

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimplyForum.Infrastructure.Data.Models
 {
+    [Index(nameof(Type), IsUnique = true)]
     public class Category
     {
         [Key]
@@ -9,6 +11,7 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         [Required]
+        [StringLength(50,MinimumLength = 3)]
         public string Type { get; set; } = null!;
 
 

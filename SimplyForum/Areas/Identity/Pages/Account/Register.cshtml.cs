@@ -74,7 +74,7 @@ namespace SimplyForum.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(20),MinLength(3)]
+            [StringLength(20,MinimumLength = 3)]
             [Display(Name = "User name")]
             public string UserName { get; set; }
 

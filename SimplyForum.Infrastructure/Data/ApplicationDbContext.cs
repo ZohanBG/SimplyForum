@@ -10,5 +10,10 @@ namespace SimplyForum.Infrastructure.Data
             : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
+
+
+        public DbSet<Community> Communities { get; set; }
     }
 }
