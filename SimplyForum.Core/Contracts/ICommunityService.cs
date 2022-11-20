@@ -7,5 +7,7 @@ namespace SimplyForum.Core.Contracts
         Task<bool> IsCommunityNameUniqueAsync(string name);
 
         Task AddCommunityAsync(AddCommunityModel model, string authorId);
+
+        Task<AllCommunitiesQueryModel> GetAllCommunitiesAsync();
     }
 }

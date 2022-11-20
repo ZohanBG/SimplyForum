@@ -1,0 +1,34 @@
+﻿@using SimplyForum.Core.Models.Community
+@model AllCommunitiesQueryModel
+
+@{
+    ViewBag.Title = "All communities";
+}
+
+@if (Model.Communities != null && Model.Communities.Any())
+{
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <hr />
+    <ol class="list-group">
+
+        @foreach (var community in Model.Communities)
+        {
+            <li class="list-group-item">
+                @{
+                    var base64 = Convert.ToBase64String(community.CommunityImage!);
+                    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+                }
+                <img src="@imgSrc" class="rounded-circle" width="40" height="40" />
+                <span>
+                    @community.Name
+                </span>
+            </li>
+        }
+    </ol>
+}
+else{
+    <h2 class="text-center">There are no communities yet!</h2>
+    <hr />
+}
+
+

@@ -61,5 +61,12 @@ namespace SimplyForum.Controllers
                 return View(model);
             }
         }
+
+
+        public async Task<IActionResult> All()
+        {
+            var model = await communityService.GetAllCommunitiesAsync();
+            return View(model);
+        }
     }
 }

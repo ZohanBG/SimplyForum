@@ -40,5 +40,20 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<AllCommunitiesQueryModel> GetAllCommunitiesAsync()
+        {
+            return new AllCommunitiesQueryModel()
+            {
+                Communities = await repo.AllReadonly<Community>()
+               .Select(c => new CommunityModel()
+               {
+                   Id = c.Id,
+                   Name = c.Name,
+                   CommunityImage = c.CommunityImage,
+                   CategoryType = c.Category.Type
+               })
+               .ToListAsync()
+            };     
+        }
     }
 }
