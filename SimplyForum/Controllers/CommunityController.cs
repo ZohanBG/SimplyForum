@@ -36,20 +36,21 @@ namespace SimplyForum.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddCommunityModel model)
         {
+            if (await communityService.IsCommunityNameUniqueAsync(model.Name))
+            {
+                ModelState.AddModelError("Name", "Community name is already used!");
+                model.CommunityCategories.AddRange(await categoryService.GetAllCategoriesAsync());
+                return View(model);
+            }
+
             if (!ModelState.IsValid) {
                 model.CommunityCategories.AddRange(await categoryService.GetAllCategoriesAsync());
                 return View(model);
             }
+
             try
             {
                 string authorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
-
-                if (!await communityService.IsCommunityNameUniqueAsync(model.Name))
-                {
-                    ModelState.AddModelError("Name", "Community name is already used!");
-                    model.CommunityCategories.AddRange(await categoryService.GetAllCategoriesAsync());
-                    return View(model);
-                }
 
                 await communityService.AddCommunityAsync(model, authorId!);
                 return RedirectToAction("Index", "Home");
@@ -68,5 +69,12 @@ namespace SimplyForum.Controllers
             var model = await communityService.GetAllCommunitiesAsync();
             return View(model);
         }
+
+        public async Task<IActionResult> Details(Guid communityId)
+        {
+            var model = await communityService.GetCommunityDetailsAsync(communityId);
+            return View(model);
+        }
+
     }
 }

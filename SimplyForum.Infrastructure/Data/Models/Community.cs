@@ -41,5 +41,8 @@ namespace SimplyForum.Infrastructure.Data.Models
 
         [ForeignKey(nameof(AuthorId))]
         public virtual ApplicationUser Author { get; set; } = null!;
+
+
+        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

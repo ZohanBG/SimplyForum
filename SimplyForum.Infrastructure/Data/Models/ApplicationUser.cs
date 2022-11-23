@@ -8,5 +8,8 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         public virtual ICollection<Community> Communities { get; set; } = new HashSet<Community>();
+
+
+        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 }

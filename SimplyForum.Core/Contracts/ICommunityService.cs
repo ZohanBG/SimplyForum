@@ -9,5 +9,7 @@ namespace SimplyForum.Core.Contracts
         Task AddCommunityAsync(AddCommunityModel model, string authorId);
 
         Task<AllCommunitiesQueryModel> GetAllCommunitiesAsync();
+
+        Task<CommunityModel> GetCommunityDetailsAsync(Guid communityId);
     }
 }

@@ -13,6 +13,7 @@
 
         @foreach (var community in Model.Communities)
         {
+
             <li class="list-group-item">
                 @{
                     var base64 = Convert.ToBase64String(community.CommunityImage!);
@@ -22,6 +23,9 @@
                 <span>
                     @community.Name
                 </span>
+                <form class="input-group-sm" asp-route-communityId="@community.Id" asp-controller="Community" asp-action="Details" method="post">
+                    <input type="submit" value="Details" class="fs-6 btn btn-success mb-3 p-2" />
+                </form>
             </li>
         }
     </ol>

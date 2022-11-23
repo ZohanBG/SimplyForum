@@ -21,7 +21,7 @@ namespace SimplyForum.Core.Services
         public async Task<bool> IsCommunityNameUniqueAsync(string name)
         {
             return await repo.AllReadonly<Community>()
-                .FirstOrDefaultAsync(c => c.Name == name) == null ? true : false;
+                .AnyAsync(c => c.Name == name);
         }
 
 
@@ -54,6 +54,26 @@ namespace SimplyForum.Core.Services
                })
                .ToListAsync()
             };     
+        }
+
+        public async Task<CommunityModel> GetCommunityDetailsAsync(Guid communityId)
+        {
+            var community = await repo.GetByIdAsync<Community>(communityId);
+                
+
+
+            if(community != null)
+            {
+                return new CommunityModel()
+                {
+                    Id = community.Id,
+                    Name = community.Name,
+                    BannerImage = community.BannerImage,
+                    CommunityImage = community.CommunityImage,
+                };
+            }
+
+            throw new FileNotFoundException();
         }
     }
 }
