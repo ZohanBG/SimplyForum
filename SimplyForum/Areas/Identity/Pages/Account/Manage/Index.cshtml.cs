@@ -115,7 +115,7 @@ namespace SimplyForum.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-            var image = new ImageResizer();
+            var image = new ImageProcessor();
             user.ProfilePicture = image.ApplicationUserProfileImageResize(Input.NewProfilePicture);
 
             await _userManager.UpdateAsync(user);

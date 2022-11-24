@@ -2,7 +2,7 @@
 
 namespace SimplyForum.Core.Contracts
 {
-    public interface IImageResizer
+    public interface IImageProcessor
     {
         byte[] ApplicationUserProfileImageResize(IFormFile file);
 
@@ -11,5 +11,8 @@ namespace SimplyForum.Core.Contracts
 
 
         byte[] CommunityBannerImageResize(IFormFile file);
+
+
+        byte[] PostImageConvert(IFormFile file);
     }
 }

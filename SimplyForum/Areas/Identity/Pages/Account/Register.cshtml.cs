@@ -116,7 +116,7 @@ namespace SimplyForum.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                var imageResizer = new ImageResizer();
+                var imageResizer = new ImageProcessor();
                 user.ProfilePicture = imageResizer.ApplicationUserProfileImageResize(Input.ProfilePicture);
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);

@@ -6,7 +6,7 @@ using SixLabors.ImageSharp.Processing;
 
 namespace SimplyForum.Core.Services
 {
-    public class ImageResizer : IImageResizer
+    public class ImageProcessor : IImageProcessor
     {
         public byte[] ApplicationUserProfileImageResize(IFormFile file)
         {
@@ -32,6 +32,15 @@ namespace SimplyForum.Core.Services
         {
             using var image = Image.Load(file.OpenReadStream());
             image.Mutate(x => x.Resize(256, 256));
+            using var imageStream = new MemoryStream();
+            image.Save(imageStream, new PngEncoder());
+            var imageBytes = imageStream.ToArray();
+            return imageBytes;
+        }
+
+        public byte[] PostImageConvert(IFormFile file)
+        {
+            using var image = Image.Load(file.OpenReadStream());
             using var imageStream = new MemoryStream();
             image.Save(imageStream, new PngEncoder());
             var imageBytes = imageStream.ToArray();

@@ -1,0 +1,46 @@
+﻿@using SimplyForum.Core.Models.Post
+@model AddPostModel
+
+@{
+    ViewData["Title"] = "Add Post";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div id="tabs">
+    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="default-tab" data-bs-toggle="tab" data-bs-target="#default" role="tab" aria-controls="default" aria-selected="true">Default</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" role="tab" aria-controls="image" aria-selected="false">Image</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url" role="tab" aria-controls="url" aria-selected="false">Url</button>
+        </li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane" id="default" role="tabpanel" aria-labelledby="default-tab">
+        <partial name="_DefaultPost" model="@Model" />
+    </div>
+    <div class="tab-pane" id="image" role="tabpanel" aria-labelledby="image-tab">
+        <partial name="_ImagePost" model="@Model" />
+    </div>
+    <div class="tab-pane" id="url" role="tabpanel" aria-labelledby="url-tab">
+        <partial name="_UrlPost" model="@Model" />
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+     
+    <script type="text/javascript">
+        var firstTabEl = document.getElementById('@(ViewBag.PostType)-tab');
+        var firstTab = new bootstrap.Tab(firstTabEl);
+        firstTab.show();
+    </script>
+}
+
+
+

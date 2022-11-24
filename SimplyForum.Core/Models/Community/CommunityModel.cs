@@ -1,4 +1,6 @@
-﻿namespace SimplyForum.Core.Models.Community
+﻿using SimplyForum.Core.Models.Post;
+
+namespace SimplyForum.Core.Models.Community
 {
     public class CommunityModel
     {
@@ -21,5 +23,8 @@
 
 
         public string? AuthorId { get; set; }
+
+
+        public IEnumerable<PostModel>? Posts { get; set; }
     }
 }

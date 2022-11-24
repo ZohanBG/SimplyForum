@@ -9,9 +9,9 @@ namespace SimplyForum.Core.Services
     public class CommunityService : ICommunityService
     {
         private readonly IRepository repo;
-        private readonly IImageResizer imageResizer;
+        private readonly IImageProcessor imageResizer;
 
-        public CommunityService(IRepository _repo, IImageResizer _imageResizer)
+        public CommunityService(IRepository _repo, IImageProcessor _imageResizer)
         {
             repo = _repo;
             imageResizer = _imageResizer;   
@@ -40,28 +40,23 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public async Task<AllCommunitiesQueryModel> GetAllCommunitiesAsync()
+        public async Task<IEnumerable<CommunityModel>> GetAllCommunitiesAsync()
         {
-            return new AllCommunitiesQueryModel()
+            return await repo.AllReadonly<Community>()
+            .Select(c => new CommunityModel()
             {
-                Communities = await repo.AllReadonly<Community>()
-               .Select(c => new CommunityModel()
-               {
-                   Id = c.Id,
-                   Name = c.Name,
-                   CommunityImage = c.CommunityImage,
-                   CategoryType = c.Category.Type
-               })
-               .ToListAsync()
-            };     
+                Id = c.Id,
+                Name = c.Name,
+                CommunityImage = c.CommunityImage,
+                CategoryType = c.Category.Type
+            })
+            .ToListAsync();
         }
 
         public async Task<CommunityModel> GetCommunityDetailsAsync(Guid communityId)
         {
             var community = await repo.GetByIdAsync<Community>(communityId);
                 
-
-
             if(community != null)
             {
                 return new CommunityModel()

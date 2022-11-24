@@ -17,6 +17,42 @@
 <div class="text-center">
 	<img src="@imgSrc" class="rounded-circle" width="80" height="80" />
 	<span>
-		<h2> @Model.Name</h2>
+		@Model.Name
 	</span>
+
+	<form asp-controller="Post" asp-action="Add"
+		  asp-route-id="@Model.Id" method="get">
+		<input class="btn btn-primary" type="submit" value="Add post" />
+	</form>
+    @if (Model.Posts != null && Model.Posts.Any())
+    {
+        foreach (var post in Model.Posts)
+        {
+            <div class="card mt-2 border-primary align-content-center">
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@post.CreatedOn</h6>
+                    @if (post.Description != null)
+                    {
+                        <p class="card-text">@post.Description</p>
+                    }
+                    @if (post.Image != null)
+                    {
+                        base64 = Convert.ToBase64String(post.Image);
+                        imgSrc = String.Format($"data:image/gif;base64,{base64}");
+                        <img src="@imgSrc" style="width: 100%;max-height: 100%"/>
+                    }
+                    @if (post.Url != null)
+                    {
+                        <a href="@post.Url">@post.Url</a>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h2 class="text-center">There are no posts yet!</h2>
+    }
 </div>
+

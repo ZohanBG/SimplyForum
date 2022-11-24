@@ -12,13 +12,13 @@ namespace SimplyForum.Infrastructure.Data
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; } = null!;
 
 
-        public DbSet<Community> Communities { get; set; }
+        public DbSet<Community> Communities { get; set; } = null!;
 
 
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Posts { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
