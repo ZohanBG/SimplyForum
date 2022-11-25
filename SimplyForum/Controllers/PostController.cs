@@ -74,8 +74,10 @@ namespace SimplyForum.Controllers
                 }
             }
 
-            return View();
+            return RedirectToAction("Details", "Community", new { communityId = model.CommunityId });
         }
+
+
 
     }
 }

@@ -1,5 +1,7 @@
-﻿using SimplyForum.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.Post;
+using SimplyForum.Core.Models.User;
 using SimplyForum.Infrastructure.Common;
 using SimplyForum.Infrastructure.Data.Models;
 
@@ -59,9 +61,27 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<PostModel>> GetAllCommunityPostsAsync(Guid communityId)
+        public async Task<IEnumerable<PostModel>> GetAllCommunityPostsAsync(Guid communityId)
         {
-            throw new NotImplementedException();
+            return await repo.AllReadonly<Post>()
+                .Include(p => p.Author)
+                .Where(p => p.CommunityId == communityId)
+                .OrderByDescending(p => p.CreatedOn)
+                .Select(p => new PostModel()
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Image = p.Image,
+                    Url = p.Url,
+                    CreatedOn = p.CreatedOn,
+                    User = new UserModel()
+                    {
+                        UserName = p.Author.UserName,
+                        ProfilePicture = p.Author.ProfilePicture
+                    }
+                })
+                .ToListAsync();
         }
     }
 }

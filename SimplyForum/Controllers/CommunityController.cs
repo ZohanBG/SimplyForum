@@ -13,12 +13,15 @@ namespace SimplyForum.Controllers
     {
         private readonly ICategoryService categoryService;
         private readonly ICommunityService communityService;
+        private readonly IPostService postservice;
 
         public CommunityController(ICategoryService _categoryService,
-            ICommunityService _communityService)
+            ICommunityService _communityService,
+            IPostService _postservice)
         {
             categoryService = _categoryService;
             communityService = _communityService;
+            postservice = _postservice;
         }
 
 
@@ -73,6 +76,7 @@ namespace SimplyForum.Controllers
         public async Task<IActionResult> Details(Guid communityId)
         {
             var model = await communityService.GetCommunityDetailsAsync(communityId);
+            model.Posts = await postservice.GetAllCommunityPostsAsync(communityId);
             return View(model);
         }
 
