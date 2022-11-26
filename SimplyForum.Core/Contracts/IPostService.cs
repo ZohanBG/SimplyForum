@@ -11,5 +11,7 @@ namespace SimplyForum.Core.Contracts
         Task AddUrlPostAsync(AddPostModel model);
 
         Task<IEnumerable<PostModel>> GetAllCommunityPostsAsync(Guid communityId);
+
+        Task<PostModel> GetPostDetailsAsync(Guid postId);
     }
 }

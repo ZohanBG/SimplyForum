@@ -3,24 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SimplyForum.Infrastructure.Data.Models
 {
-    public class Post
+    public class Comment
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
 
         [Required]
-        [StringLength(100)]
-        public string Title { get; set; } = null!;
-
-
-        public string? Description { get; set; }
-
-
-        public byte[]? Image { get; set; }
-
-
-        public string? Url { get; set; }
+        [StringLength(200)]
+        public string Description { get; set; } = null!;
 
 
         [Required]
@@ -36,13 +27,20 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         [Required]
-        public Guid CommunityId { get; set; }
+        public Guid PostId { get; set; }
 
 
-        [ForeignKey(nameof(CommunityId))]
-        public virtual Community Community { get; set; } = null!;
+        [ForeignKey(nameof(PostId))]
+        public virtual Post Post { get; set; } = null!;
 
 
-        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+        public Guid? ParentCommentId { get; set; }
+
+
+        [ForeignKey(nameof(ParentCommentId))]
+        public virtual Comment? ParentComment { get; set; }
+
+
+        public virtual ICollection<Comment> ChildrenComments { get; set; } = new HashSet<Comment>();
     }
 }

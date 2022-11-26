@@ -1,0 +1,75 @@
+﻿@using SimplyForum.Core.Models.Coment
+@using SimplyForum.Core.Models.Post
+@model PostModel
+
+@{
+	ViewBag.Title = Model.Title;
+}
+
+<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+    <div class="card mt-2 border-primary align-content-center">
+        <div class="card-body">
+            @{
+                var base64 = Convert.ToBase64String(Model.User.ProfilePicture);
+                var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+            }
+            <img src="@imgSrc" class="rounded-circle" width="40" height="40" />
+            <h3>@Model.User.UserName</h3>
+            <h5 class="card-title">@Model.Title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.CreatedOn</h6>
+            @if (Model.Description != null)
+            {
+                <p class="card-text">@Model.Description</p>
+            }
+            @if (Model.Image != null)
+            {
+                base64 = Convert.ToBase64String(Model.Image);
+                imgSrc = String.Format($"data:image/gif;base64,{base64}");
+                <img src="@imgSrc" style="width: 100%;max-height: 100%"/>
+            }
+            @if (Model.Url != null)
+            {
+                <a href="@Model.Url">@Model.Url</a>
+            }
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Add a comment</h5>
+            <partial name="_CreateComment" model="new AddCommentModel(){PostId = Model.Id}" />
+        </div>
+    </div>
+</div>
+@if (Model.Comments != null && Model.Comments.Any())
+{
+<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+    <partial name="_CommentsPartialView" model="@Model.Comments" />
+</div>
+}
+
+<partial name="_CreateReplyModal" model="new AddCommentModel(){PostId = Model.Id}" />
+<partial name="_DeleteCommentModal" model="new DeleteCommentModel(){PostId = Model.Id}" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        var replyModal = document.getElementById('replyModal');
+        // Send selected comment data to the reply modal.
+        replyModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var commentId = button.getAttribute('data-comment-id');
+            replyModal.querySelector('.modal-body #ParentCommentId').value = commentId;
+        });
+
+        var deleteModal = document.getElementById('deleteModal');
+        // Send selected comment data to the delete modal.
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var commentId = button.getAttribute('data-comment-id');
+            deleteModal.querySelector('.modal-body #CommentId').value = commentId;
+        });
+
+    </script>
+
+}
+
+
+

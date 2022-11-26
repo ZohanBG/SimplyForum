@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplyForum.Core.Contracts;
+using SimplyForum.Core.Models.Community;
 using SimplyForum.Core.Models.Post;
 using SimplyForum.Core.Models.User;
 using SimplyForum.Infrastructure.Common;
@@ -82,6 +83,33 @@ namespace SimplyForum.Core.Services
                     }
                 })
                 .ToListAsync();
+        }
+
+        public async Task<PostModel> GetPostDetailsAsync(Guid postId)
+        {
+            var post = await repo.AllReadonly<Post>()
+                .Include(p => p.Author)
+                .FirstOrDefaultAsync(p => p.Id == postId);
+
+            if (post != null)
+            {
+                return new PostModel()
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Description = post.Description,
+                    Image = post.Image,
+                    Url = post.Url,
+                    CreatedOn = post.CreatedOn,
+                    User = new UserModel()
+                    {
+                        UserName = post.Author.UserName,
+                        ProfilePicture = post.Author.ProfilePicture
+                    }
+                };
+            }
+
+            throw new FileNotFoundException();
         }
     }
 }

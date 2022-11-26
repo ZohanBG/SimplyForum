@@ -13,10 +13,12 @@ namespace SimplyForum.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly ICommentService commentService;
 
-        public PostController(IPostService _postService)
+        public PostController(IPostService _postService, ICommentService _commentService)
         {
             postService = _postService;
+            commentService = _commentService;
         }
 
 
@@ -78,6 +80,13 @@ namespace SimplyForum.Controllers
         }
 
 
+        public async Task<IActionResult> Details(Guid postId)
+        {
+            ViewBag.userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
 
+            var model = await postService.GetPostDetailsAsync(postId);
+            model.Comments = await commentService.GetAllPostCommentsAsync(postId);
+            return View(model);
+        }
     }
 }

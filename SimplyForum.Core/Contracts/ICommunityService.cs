@@ -11,5 +11,7 @@ namespace SimplyForum.Core.Contracts
         Task<IEnumerable<CommunityModel>> GetAllCommunitiesAsync();
 
         Task<CommunityModel> GetCommunityDetailsAsync(Guid communityId);
+
+        Task<IEnumerable<CommunityModel>> GetAllUserCommunitiesAsync(string userId);
     }
 }

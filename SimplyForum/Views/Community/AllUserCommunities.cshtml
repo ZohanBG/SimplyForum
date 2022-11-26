@@ -1,0 +1,32 @@
+﻿@using SimplyForum.Core.Models.Community
+@model IEnumerable<CommunityModel>
+
+@{
+    ViewBag.Title = "My communities";
+}
+
+@if (Model != null && Model.Any())
+{
+    <a asp-controller="Add" asp-action="Community" class="btn btn-primary position-absolute top-20 end-10">Add community</a>
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <hr />
+    <ol class="list-group">
+
+        @foreach (var community in Model)
+        {
+            <li class="list-group-item">
+                @{
+                    var base64 = Convert.ToBase64String(community.CommunityImage!);
+                    var imgSrc = String.Format($"data:image/gif;base64,{base64}");
+                }
+                <img src="@imgSrc" class="rounded-circle" width="40" height="40" />
+                <h1>@community.Name</h1>
+            </li>
+        }
+    </ol>
+}
+else
+{
+    <h2 class="text-center">You dont have any communities yet!</h2>
+    <hr />
+}

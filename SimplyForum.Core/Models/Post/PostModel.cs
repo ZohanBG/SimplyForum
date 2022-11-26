@@ -1,4 +1,6 @@
-﻿using SimplyForum.Core.Models.User;
+﻿using SimplyForum.Core.Models.Coment;
+using SimplyForum.Core.Models.User;
+using SimplyForum.Infrastructure.Data.Models;
 
 namespace SimplyForum.Core.Models.Post
 {
@@ -23,5 +25,8 @@ namespace SimplyForum.Core.Models.Post
 
 
         public UserModel User { get; set; } = null!;
+
+
+        public IEnumerable<Comment>? Comments { get; set; }
     }
 }

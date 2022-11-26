@@ -21,6 +21,9 @@ namespace SimplyForum.Infrastructure.Data
         public DbSet<Post> Posts { get; set; } = null!;
 
 
+        public DbSet<Comment> Comments { get; set; } = null!;
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Post>(p =>
@@ -28,6 +31,14 @@ namespace SimplyForum.Infrastructure.Data
                 p.HasOne(p => p.Community)
                 .WithMany(p => p.Posts)
                 .HasForeignKey(p => p.CommunityId)
+                .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            builder.Entity<Comment>(c =>
+            {
+                c.HasOne(c => c.Post)
+                .WithMany(c => c.Comments)
+                .HasForeignKey(c => c.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
             });
 

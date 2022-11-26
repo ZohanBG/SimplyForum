@@ -70,5 +70,19 @@ namespace SimplyForum.Core.Services
 
             throw new FileNotFoundException();
         }
+
+        public async Task<IEnumerable<CommunityModel>> GetAllUserCommunitiesAsync(string userId)
+        {
+            return await repo.AllReadonly<Community>()
+            .Where(c => c.AuthorId == userId)
+            .Select(c => new CommunityModel()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                CommunityImage = c.CommunityImage,
+                CategoryType = c.Category.Type
+            })
+            .ToListAsync();
+        }
     }
 }
