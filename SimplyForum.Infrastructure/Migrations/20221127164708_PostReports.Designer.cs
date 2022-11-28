@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimplyForum.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SimplyForum.Infrastructure.Data;
 namespace SimplyForum.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127164708_PostReports")]
+    partial class PostReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,31 +325,6 @@ namespace SimplyForum.Infrastructure.Migrations
                     b.ToTable("Communities");
                 });
 
-            modelBuilder.Entity("SimplyForum.Infrastructure.Data.Models.Like", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsLike")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Likes");
-                });
-
             modelBuilder.Entity("SimplyForum.Infrastructure.Data.Models.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -414,7 +391,7 @@ namespace SimplyForum.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("PostsReports");
+                    b.ToTable("PostReport");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -512,25 +489,6 @@ namespace SimplyForum.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SimplyForum.Infrastructure.Data.Models.Like", b =>
-                {
-                    b.HasOne("SimplyForum.Infrastructure.Data.Models.Post", "Post")
-                        .WithMany("Likes")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SimplyForum.Infrastructure.Data.Models.ApplicationUser", "User")
-                        .WithMany("Likes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SimplyForum.Infrastructure.Data.Models.Post", b =>
                 {
                     b.HasOne("SimplyForum.Infrastructure.Data.Models.ApplicationUser", "Author")
@@ -575,8 +533,6 @@ namespace SimplyForum.Infrastructure.Migrations
 
                     b.Navigation("Communities");
 
-                    b.Navigation("Likes");
-
                     b.Navigation("Posts");
 
                     b.Navigation("PostsReports");
@@ -600,8 +556,6 @@ namespace SimplyForum.Infrastructure.Migrations
             modelBuilder.Entity("SimplyForum.Infrastructure.Data.Models.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Likes");
 
                     b.Navigation("Reports");
                 });

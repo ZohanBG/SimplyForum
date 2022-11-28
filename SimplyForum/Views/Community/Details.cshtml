@@ -57,6 +57,9 @@
                         <form class="input-group-sm" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details" method="post">
                             <input type="submit" value="Details" class="fs-6 btn btn-primary mb-3 p-2" />
                         </form>
+                        <form class="input-group-sm" asp-route-id="@post.Id" asp-controller="PostReport" asp-action="Add" method="get">
+                            <input type="submit" value="Report" class="fs-6 btn btn-danger mb-3 p-2" />
+                        </form>
                     </div>
                 </div>
             </div>

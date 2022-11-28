@@ -5,7 +5,7 @@ namespace SimplyForum.Core.Models.Coment
     public class AddCommentModel
     {
         [Required]
-        [StringLength(200, MinimumLength = 20)]
+        [StringLength(200, MinimumLength = 3)]
         public string Description { get; set; } = null!;
 
 

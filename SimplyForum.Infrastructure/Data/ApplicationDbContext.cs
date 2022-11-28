@@ -24,6 +24,12 @@ namespace SimplyForum.Infrastructure.Data
         public DbSet<Comment> Comments { get; set; } = null!;
 
 
+        public DbSet<PostReport> PostsReports { get; set; } = null!;
+
+
+        public DbSet<Like> Likes { get; set; } = null!;
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Post>(p =>
@@ -39,6 +45,22 @@ namespace SimplyForum.Infrastructure.Data
                 c.HasOne(c => c.Post)
                 .WithMany(c => c.Comments)
                 .HasForeignKey(c => c.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            builder.Entity<PostReport>(pr =>
+            {
+                pr.HasOne(pr => pr.Post)
+                .WithMany(pr => pr.Reports)
+                .HasForeignKey(pr => pr.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            builder.Entity<Like>(pr =>
+            {
+                pr.HasOne(pr => pr.Post)
+                .WithMany(pr => pr.Likes)
+                .HasForeignKey(pr => pr.PostId)
                 .OnDelete(DeleteBehavior.NoAction);
             });
 

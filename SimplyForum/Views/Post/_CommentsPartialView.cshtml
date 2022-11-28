@@ -5,7 +5,7 @@
     @foreach (var comment in Model)
     {
         <li>
-            <div class="@(comment.ParentCommentId == null ? "card mt-2 border-primary" : "card mt-2")">
+            @*<div class="@(comment.ParentCommentId == null ? "card mt-2 border-primary" : "card mt-2")">*@
                 <div class="card-body">
                     @{
                         var base64 = Convert.ToBase64String(comment.Author.ProfilePicture);
@@ -19,14 +19,13 @@
                     @if (ViewBag.userId == comment.AuthorId)
                     {
                     <button type="button" class="btn btn-danger pull-right" data-bs-toggle="modal" data-bs-target="#deleteModal" data-comment-id="@comment.Id">Delete</button>
-
                     }
                 </div>
                 @if (comment.ChildrenComments != null && comment.ChildrenComments.Any()){
 
                     <partial name="_CommentsPartialView" model="comment.ChildrenComments" />
                 }
-            </div>
+            @*</div>*@
         </li>
     }
 </ul>

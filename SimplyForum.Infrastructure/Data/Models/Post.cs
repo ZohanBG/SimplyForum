@@ -44,5 +44,11 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+
+
+        public virtual ICollection<PostReport> Reports { get; set; } = new HashSet<PostReport>();
+
+
+        public virtual ICollection<Like> Likes { get; set; } = new HashSet<Like>();
     }
 }
