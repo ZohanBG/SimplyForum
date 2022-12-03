@@ -14,11 +14,14 @@ namespace SimplyForum.Controllers
     {
         private readonly IPostService postService;
         private readonly ICommentService commentService;
+        private readonly ILikeService likeService;
 
-        public PostController(IPostService _postService, ICommentService _commentService)
+        public PostController(IPostService _postService, ICommentService _commentService, 
+            ILikeService _likeService)
         {
             postService = _postService;
             commentService = _commentService;
+            likeService = _likeService;
         }
 
 
@@ -85,6 +88,7 @@ namespace SimplyForum.Controllers
             ViewBag.userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
 
             var model = await postService.GetPostDetailsAsync(postId);
+            model.LikeCountModel = await likeService.GetReactionsByPostIdAsync(postId);
             model.Comments = await commentService.GetAllPostCommentsAsync(postId);
             return View(model);
         }

@@ -1,0 +1,21 @@
+﻿@using SimplyForum.Core.Models.Like
+@using Microsoft.AspNetCore.Http.Extensions
+@model LikeCountModel
+
+
+<a asp-controller="Reaction" asp-action="Like" 
+asp-route-postId="@Model.PostId" 
+asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+	<i class="tt-icon">
+		<img src="~/images/like.svg" alt="like" height="35" width="35" />
+	</i>
+</a>
+<span id="reply-likes-@Model.PostId" class="tt-text">@Model.Likes</span>
+<a asp-controller="Reaction" asp-action="DisLike" 
+asp-route-postId="@Model.PostId" 
+asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+	<i class="tt-icon">
+		<img src="~/images/dislike.svg" alt="dislike" height="35" width="35" />
+	</i>
+</a>
+<span id="reply-dislikes-@Model.PostId" class="tt-text">@Model.DisLikes</span>

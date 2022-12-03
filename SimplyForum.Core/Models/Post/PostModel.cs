@@ -1,4 +1,5 @@
 ﻿using SimplyForum.Core.Models.Coment;
+using SimplyForum.Core.Models.Like;
 using SimplyForum.Core.Models.User;
 using SimplyForum.Infrastructure.Data.Models;
 
@@ -27,6 +28,10 @@ namespace SimplyForum.Core.Models.Post
         public UserModel User { get; set; } = null!;
 
 
+        public LikeCountModel LikeCountModel { get; set; } = null!;
+
+
         public IEnumerable<Comment>? Comments { get; set; }
+
     }
 }

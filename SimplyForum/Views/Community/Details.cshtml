@@ -1,4 +1,5 @@
-﻿@using SimplyForum.Core.Models.Community
+﻿@using SimplyForum.Core.Contracts
+@using SimplyForum.Core.Models.Community
 @model CommunityModel
 
 @{
@@ -52,6 +53,7 @@
                         {
                             <a href="@post.Url">@post.Url</a>
                         }
+                        <partial name="_PostsReactionsDetailsViewModel" model="post.LikeCountModel" />
                     </div>
                     <div class="card-footer">
                         <form class="input-group-sm" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details" method="post">
@@ -70,4 +72,17 @@
         <h2 class="text-center">There are no posts yet!</h2>
     }
 </div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo({ top: scrollpos, left: 0, behavior: 'smooth' });
+        });
+
+        window.onbeforeunload = function (e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>
+}
 

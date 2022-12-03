@@ -15,9 +15,9 @@ namespace SimplyForum.Core.Services
             repo = _repo;
         }
 
-        public async Task<LikeCountModel> AddReactionAsync(bool isLike, Guid postId, string userId)
+        public async Task AddReactionAsync(bool isLike, Guid postId, string userId)
         {
-            var reaction = await repo.AllReadonly<Like>()
+            var reaction = await repo.All<Like>()
                 .FirstOrDefaultAsync(l => l.UserId == userId && l.PostId == postId); 
 
             if(reaction == null)
@@ -42,7 +42,6 @@ namespace SimplyForum.Core.Services
 
             await repo.SaveChangesAsync();
 
-            return await GetReactionsByPostIdAsync(postId);
         }
 
         public async Task<LikeCountModel> GetReactionsByPostIdAsync(Guid postId)
@@ -51,6 +50,7 @@ namespace SimplyForum.Core.Services
 
             return new LikeCountModel()
             {
+                PostId = postId,
                 Likes = await likes.CountAsync(r => r.IsLike == true),
                 DisLikes = await likes.CountAsync(r => r.IsLike == false)
             };

@@ -84,5 +84,11 @@ namespace SimplyForum.Core.Services
             })
             .ToListAsync();
         }
+
+        public async Task<Guid?> GetCommunityIdFromPostIdAsync(Guid postId)
+        {
+            var result = await repo.AllReadonly<Post>().Include(p => p.Community).FirstOrDefaultAsync(p => p.Id == postId);
+            return result == null ? null : result.CommunityId;
+        }
     }
 }

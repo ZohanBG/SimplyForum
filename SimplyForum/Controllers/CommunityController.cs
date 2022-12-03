@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.Community;
-using SimplyForum.Core.Services;
 using System.Security.Claims;
-using System.Xml.Linq;
 
 namespace SimplyForum.Controllers
 {
@@ -14,14 +12,17 @@ namespace SimplyForum.Controllers
         private readonly ICategoryService categoryService;
         private readonly ICommunityService communityService;
         private readonly IPostService postService;
+        private readonly ILikeService likeService;
 
         public CommunityController(ICategoryService _categoryService,
             ICommunityService _communityService,
-            IPostService _postservice)
+            IPostService _postservice,
+            ILikeService _likeService)
         {
             categoryService = _categoryService;
             communityService = _communityService;
             postService = _postservice;
+            likeService = _likeService;
         }
 
 
@@ -56,7 +57,7 @@ namespace SimplyForum.Controllers
                 string authorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
 
                 await communityService.AddCommunityAsync(model, authorId!);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
@@ -75,9 +76,20 @@ namespace SimplyForum.Controllers
 
         public async Task<IActionResult> Details(Guid communityId)
         {
-            var model = await communityService.GetCommunityDetailsAsync(communityId);
-            model.Posts = await postService.GetAllCommunityPostsAsync(communityId);
-            return View(model);
+            try
+            {
+                var model = await communityService.GetCommunityDetailsAsync(communityId);
+                model.Posts = await postService.GetAllCommunityPostsAsync(communityId);
+                foreach (var post in model.Posts)
+                {
+                    post.LikeCountModel = await likeService.GetReactionsByPostIdAsync(post.Id);
+                }
+                return View(model);
+            }
+            catch 
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> AllUserCommunities()
@@ -86,7 +98,5 @@ namespace SimplyForum.Controllers
             var model = await communityService.GetAllUserCommunitiesAsync(authorId);
             return View(model);
         }
-
-
     }
 }

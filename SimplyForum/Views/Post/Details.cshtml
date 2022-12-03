@@ -1,5 +1,6 @@
 ﻿@using SimplyForum.Core.Models.Coment
 @using SimplyForum.Core.Models.Post
+@using Microsoft.AspNetCore.Http.Extensions
 @model PostModel
 
 @{
@@ -32,6 +33,26 @@
                 <a href="@Model.Url">@Model.Url</a>
             }
         </div>
+
+        <div class="card-footer">
+            <a asp-controller="Reaction" asp-action="Like"
+               asp-route-postId="@Model.LikeCountModel.PostId"
+               asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+                <i class="tt-icon">
+                    <img src="~/images/like.svg" alt="like" height="35" width="35" />
+                </i>
+            </a>
+            <span id="reply-likes-@Model.LikeCountModel.PostId" class="tt-text">@Model.LikeCountModel.Likes</span>
+            <a asp-controller="Reaction" asp-action="DisLike" 
+               asp-route-postId="@Model.LikeCountModel.PostId"
+               asp-route-returnUrl="@Context.Request.GetEncodedUrl()">
+                <i class="tt-icon">
+                    <img src="~/images/dislike.svg" alt="dislike" height="35" width="35" />
+                </i>
+            </a>
+            <span id="reply-dislikes-@Model.LikeCountModel.PostId" class="tt-text">@Model.LikeCountModel.DisLikes</span>
+        </div>
+
         <div class="card-body">
             <h5 class="card-title">Add a comment</h5>
             <partial name="_CreateComment" model="new AddCommentModel(){PostId = Model.Id}" />
