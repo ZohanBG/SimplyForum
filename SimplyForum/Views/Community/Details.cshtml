@@ -56,7 +56,7 @@
                         <partial name="_PostsReactionsDetailsViewModel" model="post.LikeCountModel" />
                     </div>
                     <div class="card-footer">
-                        <form class="input-group-sm" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details" method="post">
+                        <form class="input-group-sm" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details">
                             <input type="submit" value="Details" class="fs-6 btn btn-primary mb-3 p-2" />
                         </form>
                         <form class="input-group-sm" asp-route-id="@post.Id" asp-controller="PostReport" asp-action="Add" method="get">

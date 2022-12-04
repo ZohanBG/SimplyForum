@@ -1,7 +1,9 @@
-﻿using SimplyForum.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.PostReport;
 using SimplyForum.Infrastructure.Common;
 using SimplyForum.Infrastructure.Data.Models;
+using SimplyForum.Core.Models.User;
 
 namespace SimplyForum.Core.Services
 {
@@ -27,6 +29,25 @@ namespace SimplyForum.Core.Services
 
             await repo.AddAsync(postReport);
             await repo.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<PostReportModel>> GetAllPostReportsAsync()
+        {
+            return await repo.AllReadonly<PostReport>()
+                .Include(p => p.Author)
+                .Select(p => new PostReportModel()
+                {
+                    Type = p.Type,
+                    Description = p.Description,
+                    User = new UserModel()
+                    {
+                        UserName = p.Author.UserName,
+                        ProfilePicture = p.Author.ProfilePicture
+                    },
+                    PostId = p.PostId
+
+                })
+                .ToListAsync();
         }
     }
 }

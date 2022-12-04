@@ -5,5 +5,8 @@ namespace SimplyForum.Core.Contracts
     public interface IPostReportService
     {
         Task AddPostReportAsync(AddPostReportModel model);
+
+
+        Task<ICollection<PostReportModel>> GetAllPostReportsAsync();
     }
 }
