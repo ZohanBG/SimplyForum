@@ -41,7 +41,6 @@ namespace SimplyForum.Core.Services
             }
 
             await repo.SaveChangesAsync();
-
         }
 
         public async Task<LikeCountModel> GetReactionsByPostIdAsync(Guid postId)

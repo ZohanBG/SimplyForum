@@ -11,7 +11,7 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         [Required]
-        [StringLength(50,MinimumLength = 3)]
+        [StringLength(50)]
         public string Type { get; set; } = null!;
 
 

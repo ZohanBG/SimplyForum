@@ -6,5 +6,7 @@ namespace SimplyForum.Core.Contracts
     public interface ICategoryService
     {
         Task<List<CategoryModel>> GetAllCategoriesAsync();
+
+        Task AddCategoryAsync(AddCategoryModel model);
     }
 }

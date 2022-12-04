@@ -16,7 +16,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">@comment.CreatedOn</h6>
                     <p class="card-text">@comment.Description</p>                  
                     <button type="button" class="btn btn-primary pull-right" data-bs-toggle="modal" data-bs-target="#replyModal"data-comment-id="@comment.Id">Reply</button>
-                    @if (ViewBag.userId == comment.AuthorId)
+                    @if (ViewBag.userId == comment.AuthorId || User.IsInRole("Administrator"))
                     {
                     <button type="button" class="btn btn-danger pull-right" data-bs-toggle="modal" data-bs-target="#deleteModal" data-comment-id="@comment.Id">Delete</button>
                     }

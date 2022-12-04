@@ -15,6 +15,17 @@ namespace SimplyForum.Core.Services
             repo = _repo;
         }
 
+        public async Task AddCategoryAsync(AddCategoryModel model)
+        {
+            Category category = new Category()
+            {
+                Type = model.Type
+            };
+
+            await repo.AddAsync(category);
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<List<CategoryModel>> GetAllCategoriesAsync()
         {
             return await repo.AllReadonly<Category>()

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyForum", "SimplyForum\SimplyForum.csproj", "{3D1AC217-256C-4114-AD26-C1F167C46998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyForum.Infrastructure", "SimplyForum.Infrastructure\SimplyForum.Infrastructure.csproj", "{E95AC31C-8CD3-427A-AEF2-0ACEC74C663F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyForum.Infrastructure", "SimplyForum.Infrastructure\SimplyForum.Infrastructure.csproj", "{E95AC31C-8CD3-427A-AEF2-0ACEC74C663F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyForum.Core", "SimplyForum.Core\SimplyForum.Core.csproj", "{9A469767-F056-47A5-A7DA-8D20A8A3166E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyForum.Core", "SimplyForum.Core\SimplyForum.Core.csproj", "{9A469767-F056-47A5-A7DA-8D20A8A3166E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
