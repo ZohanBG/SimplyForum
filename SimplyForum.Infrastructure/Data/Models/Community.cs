@@ -16,6 +16,14 @@ namespace SimplyForum.Infrastructure.Data.Models
 
 
         [Required]
+        public Guid CategoryId { get; set; }
+
+
+        [ForeignKey(nameof(CategoryId))]
+        public virtual Category Category { get; set; } = null!;
+
+
+        [Required]
         public byte[] BannerImage { get; set; } = null!;
 
 
@@ -25,14 +33,6 @@ namespace SimplyForum.Infrastructure.Data.Models
 
         [Required]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-
-
-        [Required]
-        public Guid CategoryId { get; set; }
-
-
-        [ForeignKey(nameof(CategoryId))]
-        public virtual Category Category { get; set; } = null!;
 
 
         [Required]

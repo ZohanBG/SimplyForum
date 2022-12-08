@@ -6,7 +6,10 @@ namespace SimplyForum.Core.Contracts
     {
         Task AddPostReportAsync(AddPostReportModel model);
 
-
         Task<ICollection<PostReportModel>> GetAllPostReportsAsync();
+
+        Task DeletePostReportAsync(Guid postReportId);
+
+        Task DeleteAllPostReports(Guid postId);
     }
 }

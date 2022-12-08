@@ -15,13 +15,17 @@ namespace SimplyForum.Controllers
         private readonly IPostService postService;
         private readonly ICommentService commentService;
         private readonly ILikeService likeService;
+        private readonly IPostReportService postReportService;
 
-        public PostController(IPostService _postService, ICommentService _commentService, 
-            ILikeService _likeService)
+        public PostController(IPostService _postService, 
+            ICommentService _commentService, 
+            ILikeService _likeService,
+            IPostReportService _postReportService)
         {
             postService = _postService;
             commentService = _commentService;
             likeService = _likeService;
+            postReportService = _postReportService;
         }
 
 
@@ -91,6 +95,24 @@ namespace SimplyForum.Controllers
             model.LikeCountModel = await likeService.GetReactionsByPostIdAsync(postId);
             model.Comments = await commentService.GetAllPostCommentsAsync(postId);
             return View(model);
+        }
+
+        public async Task<IActionResult> Delete(Guid postId, Guid communityId)
+        {
+            var currentAuthorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+            var actualAuthorId = await postService.GetPostAuthorId(postId);
+
+            if (actualAuthorId != currentAuthorId && !User.IsInRole("Administrator"))
+            {
+                return Forbid();
+            }
+
+            await likeService.DeleteAllPostReactions(postId);
+            await commentService.DeleteAllPostComments(postId);
+            await postReportService.DeleteAllPostReports(postId);
+            await postService.DeletePostAsync(postId);
+
+            return RedirectToAction("Details", "Community", new { communityId = communityId });
         }
     }
 }

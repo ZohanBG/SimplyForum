@@ -7,6 +7,12 @@ namespace SimplyForum.Core.Contracts
     {
         Task<List<CategoryModel>> GetAllCategoriesAsync();
 
+        Task<CategoryModel> GetCategoryByIdAsync(Guid categoryId);
+
         Task AddCategoryAsync(AddCategoryModel model);
+
+        Task EditCategoryAsync(CategoryModel model);
+
+        Task<bool> IsUniqueAsync(string type);
     }
 }

@@ -3,6 +3,7 @@ using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.Category;
 using SimplyForum.Infrastructure.Common;
 using SimplyForum.Infrastructure.Data.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SimplyForum.Core.Services
 {
@@ -26,6 +27,15 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task EditCategoryAsync(CategoryModel model)
+        {
+            var category = await repo.GetByIdAsync<Category>(model.Id);
+
+            category.Type = model.Type;
+
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<List<CategoryModel>> GetAllCategoriesAsync()
         {
             return await repo.AllReadonly<Category>()
@@ -36,6 +46,17 @@ namespace SimplyForum.Core.Services
                     Type = c.Type
                 })
                 .ToListAsync();
+        }
+
+        public async Task<CategoryModel> GetCategoryByIdAsync(Guid categoryId)
+        {
+            var result = await repo.GetByIdAsync<Category>(categoryId);
+            return new CategoryModel() { Id = result.Id, Type = result.Type };
+        }
+
+        public async Task<bool> IsUniqueAsync(string type)
+        {
+            return await repo.AllReadonly<Category>().AnyAsync(c => c.Type == type);
         }
     }
 }

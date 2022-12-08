@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using SimplyForum.Infrastructure.Data.Configuration;
 using SimplyForum.Infrastructure.Data.Models;
 
 namespace SimplyForum.Infrastructure.Data
@@ -32,6 +33,12 @@ namespace SimplyForum.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new CommunityConfiguration());
+
             builder.Entity<Post>(p =>
             {
                 p.HasOne(p => p.Community)

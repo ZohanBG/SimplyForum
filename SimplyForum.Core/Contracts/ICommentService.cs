@@ -11,5 +11,9 @@ namespace SimplyForum.Core.Contracts
         Task<IEnumerable<Comment>> GetAllPostCommentsAsync(Guid postId);
 
         Task DeleteComment(Guid commentId); 
+
+        Task<string> GetCommentAuthorId(Guid commentId);
+
+        Task DeleteAllPostComments(Guid postId);
     }
 }

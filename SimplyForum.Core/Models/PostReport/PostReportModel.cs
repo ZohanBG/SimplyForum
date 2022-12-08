@@ -6,6 +6,8 @@ namespace SimplyForum.Core.Models.PostReport
 {
     public class PostReportModel
     {
+        public Guid Id { get; set; }
+
         public ReportType Type { get; set; }
 
 

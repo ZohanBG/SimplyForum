@@ -13,5 +13,9 @@ namespace SimplyForum.Core.Contracts
         Task<IEnumerable<PostModel>> GetAllCommunityPostsAsync(Guid communityId);
 
         Task<PostModel> GetPostDetailsAsync(Guid postId);
+
+        Task<string> GetPostAuthorId(Guid postId);
+
+        Task DeletePostAsync(Guid postId);
     }
 }

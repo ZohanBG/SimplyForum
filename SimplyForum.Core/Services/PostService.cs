@@ -62,6 +62,12 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task DeletePostAsync(Guid postId)
+        {
+            await repo.DeleteAsync<Post>(postId);
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<PostModel>> GetAllCommunityPostsAsync(Guid communityId)
         {
             return await repo.AllReadonly<Post>()
@@ -78,11 +84,18 @@ namespace SimplyForum.Core.Services
                     CreatedOn = p.CreatedOn,
                     User = new UserModel()
                     {
+                        Id = p.AuthorId,
                         UserName = p.Author.UserName,
                         ProfilePicture = p.Author.ProfilePicture
                     }
                 })
                 .ToListAsync();
+        }
+
+        public async Task<string> GetPostAuthorId(Guid postId)
+        {
+            var post = await repo.GetByIdAsync<Post>(postId);
+            return post.AuthorId;
         }
 
         public async Task<PostModel> GetPostDetailsAsync(Guid postId)

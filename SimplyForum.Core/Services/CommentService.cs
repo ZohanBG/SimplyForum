@@ -38,9 +38,11 @@ namespace SimplyForum.Core.Services
         public async Task DeleteComment(Guid commentId)
         {
             var comments = await context.Comments
-            .Include(x => x.ChildrenComments).ToListAsync();
+            .Include(x => x.ChildrenComments)
+            .Where(x => x.Id == commentId)
+            .ToListAsync();
 
-            var flatten = Flatten(comments.Where(x => x.Id == commentId));
+            var flatten = Flatten(comments);
 
             context.RemoveRange(flatten);
 
@@ -65,6 +67,30 @@ namespace SimplyForum.Core.Services
             .ToList();
      
             return rootComments;
+        }
+
+        public async Task<string> GetCommentAuthorId(Guid commentId)
+        {
+            var comment = await repo.GetByIdAsync<Comment>(commentId);
+            return comment.AuthorId;
+        }
+
+        public async Task DeleteAllPostComments(Guid postId)
+        {
+            var comments = await context.Comments
+            .Include(x => x.ChildrenComments)
+            .Where(x => x.PostId == postId)
+            .ToListAsync();
+
+            if (comments.Any())
+            {
+                var flatten = Flatten(comments);
+
+                context.RemoveRange(flatten);
+
+                await context.SaveChangesAsync();
+            }
+
         }
     }
 }

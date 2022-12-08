@@ -20,7 +20,8 @@
                     var imgSrc = String.Format($"data:image/gif;base64,{base64}");
                 }
                 <img src="@imgSrc" class="rounded-circle" width="40" height="40" />
-                <h1>@community.Name</h1>        
+                <h1>@community.Name</h1>  
+                <h3>@community.CategoryType</h3>
                 <form class="input-group-sm" asp-route-communityId="@community.Id" asp-controller="Community" asp-action="Details" method="post">
                     <input type="submit" value="Details" class="fs-6 btn btn-primary mb-3 p-2" />
                 </form>

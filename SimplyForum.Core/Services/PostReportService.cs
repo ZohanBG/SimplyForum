@@ -31,12 +31,33 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task DeleteAllPostReports(Guid postId)
+        {
+            var postReports = await repo.All<PostReport>()
+                .Where(pr => pr.PostId == postId)
+                .ToListAsync();
+
+            if (postReports.Any())
+            {
+                repo.DeleteRange(postReports);
+
+                await repo.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeletePostReportAsync(Guid postReportId)
+        {
+            await repo.DeleteAsync<PostReport>(postReportId);
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<ICollection<PostReportModel>> GetAllPostReportsAsync()
         {
             return await repo.AllReadonly<PostReport>()
                 .Include(p => p.Author)
                 .Select(p => new PostReportModel()
                 {
+                    Id = p.Id,
                     Type = p.Type,
                     Description = p.Description,
                     User = new UserModel()
@@ -45,7 +66,6 @@ namespace SimplyForum.Core.Services
                         ProfilePicture = p.Author.ProfilePicture
                     },
                     PostId = p.PostId
-
                 })
                 .ToListAsync();
         }

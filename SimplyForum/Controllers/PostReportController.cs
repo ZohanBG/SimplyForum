@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.PostReport;
 using System.Security.Claims;
 
 namespace SimplyForum.Controllers
 {
+    [Authorize]
     public class PostReportController : Controller
     {
         private readonly IPostReportService postReportService;

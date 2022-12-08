@@ -18,5 +18,11 @@ namespace SimplyForum.Areas.Admin.Controllers
             var model = await postReportService.GetAllPostReportsAsync();
             return View(model);
         }
+
+        public async Task<IActionResult> Delete(Guid postReportId)
+        {
+            await postReportService.DeletePostReportAsync(postReportId);
+            return RedirectToAction(nameof(All));
+        }
     }
 }

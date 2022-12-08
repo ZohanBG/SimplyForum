@@ -43,6 +43,18 @@ namespace SimplyForum.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task DeleteAllPostReactions(Guid postId)
+        {
+            var reactions = repo.All<Like>()
+                .Where(l => l.PostId == postId);
+
+            if (reactions.Any())
+            {
+                repo.DeleteRange(reactions);
+                await repo.SaveChangesAsync();
+            }
+        }
+
         public async Task<LikeCountModel> GetReactionsByPostIdAsync(Guid postId)
         {
             var likes = repo.AllReadonly<Like>().Where(r => r.PostId == postId);

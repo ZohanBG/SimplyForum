@@ -7,5 +7,7 @@ namespace SimplyForum.Core.Contracts
         Task AddReactionAsync(bool isLike, Guid postId, string userId); 
 
         Task<LikeCountModel> GetReactionsByPostIdAsync(Guid postId);
+
+        Task DeleteAllPostReactions(Guid postId);
     }
 }
