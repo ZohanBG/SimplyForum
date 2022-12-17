@@ -57,21 +57,23 @@
                         <partial name="_PostsReactionsDetailsViewModel" model="post.LikeCountModel" />
                     </div>
                     <div class="card-footer">
-                        <form class="input-group-sm" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details">
-                            <input type="submit" value="Details" class="fs-6 btn btn-primary mb-3 p-2" />
+                        <div class="row">
+                            <form class="col" asp-route-postId="@post.Id" asp-controller="Post" asp-action="Details">
+                            <input type="submit" value="Details" class="fs-6 btn btn-primary me-1" />
                         </form>
-                        <form class="input-group-sm" asp-route-id="@post.Id" asp-controller="PostReport" asp-action="Add" method="get">
-                            <input type="submit" value="Report" class="fs-6 btn btn-secondary mb-3 p-2" />
+                            <form class="col" asp-route-id="@post.Id" asp-controller="PostReport" asp-action="Add" method="get">
+                            <input type="submit" value="Report" class="fs-6 btn btn-secondary me-1" />
                         </form>
                         @if (post.User.Id != null && 
                             post.User.Id == User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value! ||
                             User.IsInRole("Administrator")
                         )
                         {
-                            <form class="input-group-sm" asp-route-postId="@post.Id" asp-route-communityId="@Model.Id" asp-controller="Post" asp-action="Delete">
-                            <input type="submit" value="Delete" class="fs-6 btn btn-danger mb-3 p-2" />
+                                <form class="col" asp-route-postId="@post.Id" asp-route-communityId="@Model.Id" asp-controller="Post" asp-action="Delete">
+                            <input type="submit" value="Delete" class="fs-6 btn btn-danger me-1" />
                             </form>
                         }
+                        </div>
                     </div>
                 </div>
             </div>
