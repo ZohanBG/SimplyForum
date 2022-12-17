@@ -41,7 +41,7 @@ namespace SimplyForum.Infrastructure.Data.Configuration
             {
                 new Community()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.ParseExact("89B69807-D8A3-4BEF-92DE-130408B42879","D"),
                     Name = "Songs",
                     CreatedOn = DateTime.UtcNow,
                     CategoryId = Guid.ParseExact("F4863175-B536-4D9C-8FCD-9230C9A48CF1","D"),
@@ -51,7 +51,7 @@ namespace SimplyForum.Infrastructure.Data.Configuration
                 },
                 new Community()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.ParseExact("395C1600-768C-47DB-BCE4-CA771FFA8D2E","D"),
                     Name = "Games",
                     CreatedOn = DateTime.UtcNow,
                     CategoryId = Guid.ParseExact("52BF3597-B6D0-4959-B922-CE3F1D6D2E94","D"),
@@ -61,7 +61,7 @@ namespace SimplyForum.Infrastructure.Data.Configuration
                 },
                 new Community()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.ParseExact("CDFF2380-02CB-4DDF-9DDE-32777D6AAE8C","D"),
                     Name = "Memes",
                     CreatedOn = DateTime.UtcNow,
                     CategoryId = Guid.ParseExact("F579F2A3-0573-49F0-B0B5-EFA8F52BBBF9","D"),

@@ -3,7 +3,6 @@ using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.Category;
 using SimplyForum.Infrastructure.Common;
 using SimplyForum.Infrastructure.Data.Models;
-using System.Reflection.Metadata.Ecma335;
 
 namespace SimplyForum.Core.Services
 {
