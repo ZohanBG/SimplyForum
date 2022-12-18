@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using SimplyForum.Core.Contracts;
 using SimplyForum.Core.Models.Coment;
@@ -36,11 +35,7 @@ namespace SimplyForum.Controllers
         {
             var currentAuthorId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
             var actualAuthorId = await commentService.GetCommentAuthorId(model.CommentId);
-            if (actualAuthorId != currentAuthorId || !User.IsInRole("Administrator"))
-            {
-                return Forbid();
-            
-            }
+
             await commentService.DeleteComment(model.CommentId);
 
             return RedirectToAction("Details", "Post", new { postId = model.PostId});

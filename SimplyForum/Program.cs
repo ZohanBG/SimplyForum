@@ -4,7 +4,6 @@ using SimplyForum.Core.Contracts;
 using SimplyForum.Infrastructure.Data;
 using SimplyForum.Infrastructure.Data.Models;
 using SimplyForum.Infrastructure.Common;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
